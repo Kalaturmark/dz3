@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Динамічний текст зі стилями</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:focus {
+            outline: none;
+        }
+    </style>
+
+</head>
+<body>
+<button onclick="displayStyledText()">Відобразити текст зі стилями</button>
+</body>
+</html>
+<script>
+    const styles = [
+        { name: 'color', value: 'blue' },
+        { name: 'font-size', value: '20px' },
+        { name: 'text-align', value: 'center' },
+        { name: 'text-decoration', value: 'underline' },
+        { name: 'font-weight', value: 'bold' }
+    ];
+
+    function applyStyles(styles, text) {
+        let styleString = styles.map(style => `${style.name}: ${style.value}`).join('; ');
+        document.write(`<p style="${styleString}">${text}</p>`);
+    }
+
+    function displayStyledText() {
+        const text = prompt("Введіть текст для відображення:");
+        if (text) {
+            applyStyles(styles, text);
+        }
+    }
+</script>
