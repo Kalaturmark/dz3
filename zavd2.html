@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чек магазину</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: #eee;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+
+</head>
+<body onload="displayReceipt()">
+<div class="container">
+    <h1>Чек магазину</h1>
+    <ul id="receipt"></ul>
+    <button onclick="calculateTotal()">Підрахувати загальну суму</button>
+    <button onclick="getMostExpensiveItem()">Найдорожча покупка</button>
+    <button onclick="calculateAveragePrice()">Середня вартість товару</button>
+</div>
+</body>
+</html>
+<script>
+    const receipt = [
+        { name: 'Хліб', quantity: 2, pricePerUnit: 20 },
+        { name: 'Молоко', quantity: 1, pricePerUnit: 25 },
+        { name: 'Яйця', quantity: 10, pricePerUnit: 3 }
+    ];
+
+    function displayReceipt() {
+        const receiptContainer = document.getElementById('receipt');
+        receiptContainer.innerHTML = '';
+        receipt.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${item.name}: Кількість: ${item.quantity}, Ціна за одиницю: ${item.pricePerUnit} грн, Загальна сума: ${item.quantity * item.pricePerUnit} грн`;
+            receiptContainer.appendChild(listItem);
+        });
+    }
+
+    function calculateTotal() {
+        const total = receipt.reduce((sum, item) => sum + (item.quantity * item.pricePerUnit), 0);
+        alert(`Загальна сума покупки: ${total} грн`);
+    }
+
+    function getMostExpensiveItem() {
+        const mostExpensive = receipt.reduce((prev, current) => (prev.quantity * prev.pricePerUnit) > (current.quantity * current.pricePerUnit) ? prev : current);
+        alert(`Найдорожча покупка: ${mostExpensive.name}, Загальна сума: ${mostExpensive.quantity * mostExpensive.pricePerUnit} грн`);
+    }
+
+    function calculateAveragePrice() {
+        const totalItems = receipt.reduce((sum, item) => sum + item.quantity, 0);
+        const totalPrice = receipt.reduce((sum, item) => sum + (item.quantity * item.pricePerUnit), 0);
+        const averagePrice = totalPrice / totalItems;
+        alert(`Середня вартість одного товару: ${averagePrice.toFixed(2)} грн`);
+    }
+</script>
