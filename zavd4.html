@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аудиторії академії</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .container {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: #eee;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <h1>Список аудиторій</h1>
+    <ul id="auditoriums-list"></ul>
+    <button onclick="displayAuditoriums()">Всі аудиторії</button>
+    <button onclick="displayAuditoriumsByFaculty('Математика')">Аудиторії факультету Математика</button>
+    <button onclick="displayAuditoriumsByFaculty('Фізика')">Аудиторії факультету Фізика</button>
+    <button onclick="displayAuditoriumsByFaculty('Інформатика')">Аудиторії факультету Інформатика</button>
+    <button onclick="sortAuditoriumsBySeats()">Сортувати за кількістю місць</button>
+    <button onclick="sortAuditoriumsByName()">Сортувати за назвою</button>
+</div>
+</body>
+</html>
+<script>
+    const auditoriums = [
+        { name: 'Аудиторія 101', seats: 15, faculty: 'Математика' },
+        { name: 'Аудиторія 102', seats: 20, faculty: 'Фізика' },
+        { name: 'Аудиторія 103', seats: 10, faculty: 'Інформатика' },
+        { name: 'Аудиторія 104', seats: 18, faculty: 'Математика' },
+        { name: 'Аудиторія 105', seats: 12, faculty: 'Фізика' },
+    ];
+
+    function displayAuditoriums() {
+        const list = document.getElementById('auditoriums-list');
+        list.innerHTML = '';
+        auditoriums.forEach(auditorium => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${auditorium.name}: Місць: ${auditorium.seats}, Факультет: ${auditorium.faculty}`;
+            list.appendChild(listItem);
+        });
+    }
+
+    function displayAuditoriumsByFaculty(faculty) {
+        const list = document.getElementById('auditoriums-list');
+        list.innerHTML = '';
+        auditoriums.filter(auditorium => auditorium.faculty === faculty).forEach(auditorium => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${auditorium.name}: Місць: ${auditorium.seats}, Факультет: ${auditorium.faculty}`;
+            list.appendChild(listItem);
+        });
+    }
+
+    function displaySuitableAuditoriums(group) {
+        const list = document.getElementById('auditoriums-list');
+        list.innerHTML = '';
+        auditoriums.filter(auditorium => auditorium.seats >= group.students && auditorium.faculty === group.faculty).forEach(auditorium => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${auditorium.name}: Місць: ${auditorium.seats}, Факультет: ${auditorium.faculty}`;
+            list.appendChild(listItem);
+        });
+    }
+
+    function sortAuditoriumsBySeats() {
+        auditoriums.sort((a, b) => a.seats - b.seats);
+        displayAuditoriums();
+    }
+
+    function sortAuditoriumsByName() {
+        auditoriums.sort((a, b) => a.name.localeCompare(b.name));
+        displayAuditoriums();
+    }
+
+    window.onload = displayAuditoriums;
+</script>
